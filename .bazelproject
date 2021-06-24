@@ -1,0 +1,13 @@
+directories:
+  .
+
+targets:
+  //...
+
+workspace_type: android
+
+additional_languages:
+  kotlin
+  android
+
+android_sdk_platform: android-29

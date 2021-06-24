@@ -1,0 +1,15 @@
+# Enable verbose failures
+build --verbose_failures
+
+run -s
+
+# Output all
+test --test_output=all
+
+# Android config
+build --incompatible_use_python_toolchains=false  # https://stackoverflow.com/questions/65894443/running-android-app-using-bazel-fails-due-to-python-import#comment116568105_65894443
+build --java_header_compilation=false
+build --define=android_dexmerger_tool=d8_dexmerger
+build --define=android_incremental_dexing_tool=d8_dexbuilder
+build --incremental_dexing
+build --nouse_workers_with_dexbuilder
