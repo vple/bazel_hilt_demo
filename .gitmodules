@@ -1,0 +1,3 @@
+[submodule "third_party/rules_kotlin"]
+	path = third_party/rules_kotlin
+	url = git@github.com:geaden/rules_kotlin.git

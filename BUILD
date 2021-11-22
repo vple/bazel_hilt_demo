@@ -1,6 +1,9 @@
 load(
     "@io_bazel_rules_kotlin//kotlin:kotlin.bzl",
     "define_kt_toolchain",
+)
+load(
+    "@io_bazel_rules_kotlin//kotlin:core.bzl",
     "kt_javac_options",
     "kt_kotlinc_options",
 )
@@ -19,7 +22,7 @@ default_java_toolchain(
 # Kotlin Toolchain
 kt_kotlinc_options(
     name = "kt_kotlinc_options",
-    x_use_ir = True,
+    x_use_experimental = True,
 )
 
 kt_javac_options(
@@ -28,12 +31,12 @@ kt_javac_options(
 
 define_kt_toolchain(
     name = "kotlin_toolchain",
-    api_version = "1.4",
+    api_version = "1.5",
     experimental_use_abi_jars = False,
     javac_options = "//:kt_javac_options",
-    jvm_target = "1.8",
+    jvm_target = "11",
     kotlinc_options = "//:kt_kotlinc_options",
-    language_version = "1.4",
+    language_version = "1.5",
 )
 
 hilt_android_rules()
@@ -46,7 +49,7 @@ android_binary(
         "minSdkVersion": "26",
         "versionCode": "1",
         "versionName": "1.0",
-        "targetSdkVersion": "29",
+        "targetSdkVersion": "31",
     },
     multidex = "native",
     deps = [

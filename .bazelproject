@@ -10,4 +10,4 @@ additional_languages:
   kotlin
   android
 
-android_sdk_platform: android-29
+android_sdk_platform: android-31

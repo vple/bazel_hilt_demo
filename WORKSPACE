@@ -1,8 +1,8 @@
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
-_RULES_JVM_EXTERNAL_TAG = "4.0"
+_RULES_JVM_EXTERNAL_TAG = "4.1"
 
-_RULES_JVM_EXTERNAL_SHA = "31701ad93dbfe544d597dbe62c9a1fdd76d81d8a9150c2bf1ecf928ecdf97169"
+_RULES_JVM_EXTERNAL_SHA = "f36441aa876c4f6427bfb2d1f2d723b48e9d930b62662bf723ddfb8fc80f0140"
 
 http_archive(
     name = "rules_jvm_external",
@@ -11,19 +11,21 @@ http_archive(
     url = "https://github.com/bazelbuild/rules_jvm_external/archive/%s.zip" % _RULES_JVM_EXTERNAL_TAG,
 )
 
-_RULES_KOTLIN_VERSION = "1.5.0-alpha-3"
-
-_RULES_KOTLIN_SHA = "eeae65f973b70896e474c57aa7681e444d7a5446d9ec0a59bb88c59fc263ff62"
-
-http_archive(
-    name = "io_bazel_rules_kotlin",
-    sha256 = _RULES_KOTLIN_SHA,
-    urls = ["https://github.com/bazelbuild/rules_kotlin/releases/download/v{}/rules_kotlin_release.tgz".format(_RULES_KOTLIN_VERSION)],
+local_repository(
+    name = "release_archive",
+    path = "third_party/rules_kotlin/src/main/starlark/release_archive",
 )
 
-_DAGGER_TAG = "2.37"
+load("@release_archive//:repository.bzl", "archive_repository")
 
-_DAGGER_SHA = "0f001ed38ed4ebc6f5c501c20bd35a68daf01c8dbd7541b33b7591a84fcc7b1c"
+archive_repository(
+    name = "io_bazel_rules_kotlin",
+    local_path = "third_party/rules_kotlin"
+)
+
+_DAGGER_TAG = "2.38.1"
+
+_DAGGER_SHA = "d20c81fd622f8bbb714239ea3cb7c963e77fc8ec3c88487f912189a9538071e9"
 
 http_archive(
     name = "dagger",
@@ -38,11 +40,15 @@ load(
     "HILT_ANDROID_REPOSITORIES",
 )
 
-android_sdk_repository(name = "androidsdk")
+android_sdk_repository(
+    name = "androidsdk",
+    api_level = 31,
+    build_tools_version = "30.0.3",
+)
 
 load("@rules_jvm_external//:defs.bzl", "maven_install")
 
-_KOTLIN_VERSION = "1.4.32"
+_KOTLIN_VERSION = "1.5.21"
 
 maven_install(
     artifacts = [
@@ -57,18 +63,16 @@ maven_install(
     repositories = HILT_ANDROID_REPOSITORIES,
 )
 
-load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "kotlin_repositories")
+load(
+    "@io_bazel_rules_kotlin//kotlin:repositories.bzl",
+    "kotlin_repositories",
+    "kotlinc_version",
+)
 
-_KOTLINC_RELEASE_SHA = "dfef23bb86bd5f36166d4ec1267c8de53b3827c446d54e82322c6b6daad3594c"
-
-_DOWNLOAD_URL = "https://github.com/JetBrains/kotlin/releases/download/v{v}/kotlin-compiler-{v}.zip"
-
-_KOTLINC_RELEASE = {
-    "urls": [
-        _DOWNLOAD_URL.format(v = _KOTLIN_VERSION),
-    ],
-    "sha256": _KOTLINC_RELEASE_SHA,
-}
+_KOTLINC_RELEASE = kotlinc_version(
+    release = "1.5.21",
+    sha256 = "f3313afdd6abf1b8c75c6292f4e41f2dbafefc8f6c72762c7ba9b3daeef5da59",
+)
 
 kotlin_repositories(compiler_release = _KOTLINC_RELEASE)
 

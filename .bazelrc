@@ -1,3 +1,7 @@
+# Use declared java toolchain
+build --java_toolchain //:java_toolchain
+build --host_java_toolchain //:java_toolchain
+
 # Enable verbose failures
 build --verbose_failures
 
@@ -7,9 +11,8 @@ run -s
 test --test_output=all
 
 # Android config
-build --incompatible_use_python_toolchains=false  # https://stackoverflow.com/questions/65894443/running-android-app-using-bazel-fails-due-to-python-import#comment116568105_65894443
-build --java_header_compilation=false
 build --define=android_dexmerger_tool=d8_dexmerger
 build --define=android_incremental_dexing_tool=d8_dexbuilder
+build --define=android_standalone_dexing_tool=d8_compat_dx
 build --incremental_dexing
 build --nouse_workers_with_dexbuilder

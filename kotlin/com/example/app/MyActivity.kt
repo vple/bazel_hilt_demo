@@ -7,10 +7,10 @@ import androidx.appcompat.app.AppCompatActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint(AppCompatActivity::class)
-class MyActivity : Hilt_MyActivity() {
+class MyActivity : AppCompatActivity() {
 
-    val viewModel: MyViewModel by viewModels()
-    
+    private val viewModel: MyViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val tv = TextView(this)
