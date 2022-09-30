@@ -23,9 +23,9 @@ archive_repository(
     local_path = "third_party/rules_kotlin"
 )
 
-_DAGGER_TAG = "2.38.1"
+_DAGGER_TAG = "2.44"
 
-_DAGGER_SHA = "d20c81fd622f8bbb714239ea3cb7c963e77fc8ec3c88487f912189a9538071e9"
+_DAGGER_SHA = "8c0876d46e8ce9332c4d4fbc2444420e0d75f041b3d4bab8313d2542d1e758ff"
 
 http_archive(
     name = "dagger",
