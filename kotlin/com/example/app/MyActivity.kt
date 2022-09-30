@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint(AppCompatActivity::class)
-class MyActivity : AppCompatActivity() {
+class MyActivity : Hilt_MyActivity() {
 
     private val viewModel: MyViewModel by viewModels()
 
